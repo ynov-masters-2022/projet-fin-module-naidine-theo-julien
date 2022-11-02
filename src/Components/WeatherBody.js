@@ -1,14 +1,13 @@
-import pression from  '../img/thermo.png'
-import humidity from  '../img/humidity.png'
-import wind from  '../img/wind.png'
-
+import pression from  '../img/thermo.png';
+import humidity from  '../img/humidity.png';
+import wind from  '../img/wind.png';
+import '../css/WeatherBody.css';
 
 
 
 const WeatherBody = (props) => {
   const baseUrlIcon = "http://openweathermap.org/img/wn/";
   const extensionIcon = "@2x.png";
-  console.log(props.data)
   if (props.data){
 
     let data = props.data;

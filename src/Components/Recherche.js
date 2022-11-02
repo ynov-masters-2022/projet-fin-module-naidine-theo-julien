@@ -3,6 +3,8 @@ import WeatherBody from './WeatherBody';
 import { useRef, useState } from 'react';
 import { TextField } from '@mui/material';
 import axios from 'axios';
+import '../css/SearchBar.css'
+
 
 const Recherche = () => {
 
@@ -31,18 +33,20 @@ const Recherche = () => {
                     console.log("Erreur");
                 }
               
-            });
+            })
     }
     return (
-        <div>
+        <div className="weatherBody">
+            <div className="searchBar">
             <form onSubmit={rechercheVille}>    
             <TextField 
                 inputRef={typed} 
                 label="Ville" 
                 variant="outlined"
             />
-            <Button variant='contained' type="submit">Recherche</Button>
+            <Button id='searchButton' variant='contained' type="submit">Recherche</Button>
             </form>
+            </div>
             <WeatherBody data={apiResponse}> </WeatherBody>
         </div>   
     )
