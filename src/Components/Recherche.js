@@ -4,21 +4,28 @@ import { useRef, useState } from 'react';
 import { TextField } from '@mui/material';
 import axios from 'axios';
 import '../css/SearchBar.css'
-
+import SnackAlert from './SnackAlert';
 
 const Recherche = () => {
 
     const typed = useRef("");
     const [apiResponse, setapiResponse] = useState("");
-    const baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-    const apiText = "&lang=fr&units=metric&APPID=";
-    const api ="0eb30579f3b53ddf5aca5c62e09b62d9";
+
+    const [error, setError] = useState(false);
+
+    const handleErrorTyped = () => {
+        setError(true);
+    };
+
+    const handleClose = () => {
+        setError(false);
+    };
 
     let url=  "";
     const rechercheVille  = (e) =>{
         e.preventDefault();
-        url=  baseUrl + typed.current.value + apiText + api;
-        
+        url=  process.env.REACT_APP_baseUrl + typed.current.value + process.env.REACT_APP_apiText + process.env.REACT_APP_api;
+        console.log(url);
         /* appel API axios */
         axios({
             method: 'get',
@@ -29,14 +36,14 @@ const Recherche = () => {
                 if (response.data){
                     setapiResponse(response.data);
                 }
-                else {
-                    console.log("Erreur");
-                }
-              
             })
+            .catch((error) => {
+                handleErrorTyped();
+            });
     }
     return (
         <div className="weatherBody">
+            <SnackAlert error={error} typed={typed.current.value} handleClose={handleClose}/>
             <div className="searchBar">
             <form onSubmit={rechercheVille}>    
             <TextField 
