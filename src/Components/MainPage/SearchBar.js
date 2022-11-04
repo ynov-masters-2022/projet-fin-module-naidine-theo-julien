@@ -1,12 +1,12 @@
 import Button from '@mui/material/Button';
-import WeatherBody from './WeatherBody';
+import WeatherBody from '../MainPage/WeatherBody';
 import { useRef, useState } from 'react';
 import { TextField } from '@mui/material';
 import axios from 'axios';
-import '../css/SearchBar.css'
+import '../../css/SearchBar.css'
 import SnackAlert from './SnackAlert';
 
-const Recherche = () => {
+const SearchBar = () => {
 
     const typed = useRef("");
     const [apiResponse, setapiResponse] = useState("");
@@ -25,7 +25,7 @@ const Recherche = () => {
     const rechercheVille  = (e) =>{
         e.preventDefault();
         url=  process.env.REACT_APP_baseUrl + typed.current.value + process.env.REACT_APP_apiText + process.env.REACT_APP_api;
-        console.log(url);
+
         /* appel API axios */
         axios({
             method: 'get',
@@ -59,4 +59,4 @@ const Recherche = () => {
     )
 }
 
-export default Recherche;
+export default SearchBar;

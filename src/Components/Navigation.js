@@ -6,19 +6,18 @@ import {
   Link
 } from "react-router-dom";
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Recherche from './Recherche'
-import Favorite from './Capital'
-import Capital from "./Capital";
+import Tab from '@mui/material/Tab'
+import SearchBar from './MainPage/SearchBar'
+import Favorite from "./CapitalPage/Favorite";
 
 const routes = [
     {
         path: "/",
-        component: Recherche
+        component: SearchBar
     },
     {
-        path: "/Capital",
-        component: Capital
+        path: "/Capitales",
+        component: Favorite
     }
 ]
 
@@ -26,9 +25,9 @@ const Navigation = () => {
     return (
         <div>
             <Router>
-                <Tabs>
-                    <Tab label="Météo" to="/" component={Link}/>
-                    <Tab label="Favoris" to="/favorite" component={Link}/>
+                <Tabs value={false}>
+                    <Tab to="/" label="Météo" component={Link}/>
+                    <Tab to="/Capitales" label="Capitales" component={Link}/> 
                 </Tabs>
                 <Routes>
                     {routes.map((route, i) => (

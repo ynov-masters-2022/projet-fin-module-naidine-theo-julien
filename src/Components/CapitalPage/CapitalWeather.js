@@ -1,20 +1,19 @@
-import pression from  '../img/thermo.png';
-import humidity from  '../img/humidity.png';
-import wind from  '../img/wind.png';
-import '../css/WeatherBody.css';
+import pression from  '../../img/thermo.png'
+import humidity from  '../../img/humidity.png'
+import wind from  '../../img/wind.png'
 
 
-
-const WeatherBody = (props) => {
+const CapitalWeather = (props) => {
   const baseUrlIcon = "http://openweathermap.org/img/wn/";
   const extensionIcon = "@2x.png";
+  
   if (props.data){
 
     let data = props.data;
     let temp = Math.floor(data.main.temp)
     let icon = baseUrlIcon + data.weather[0].icon + extensionIcon
     return (
-      <div className = "card">
+      <div className = "card2">
       <h4 className = "text-center">{data.name}</h4>
       <img className = "imgTemps" src = {icon}></img>
       <p className = "text-center pTemps">{data.weather[0].description}</p>
@@ -47,6 +46,4 @@ const WeatherBody = (props) => {
   }
 }
 
-
-
-export default WeatherBody;
+export default CapitalWeather;

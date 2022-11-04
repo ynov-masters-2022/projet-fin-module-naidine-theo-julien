@@ -10,14 +10,12 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import '../../css/UserAccount.css'
 import axios from 'axios';
+import {getCredentials} from '../../Services/FakeJwtServices';
 
 const UserAccount = () => {
     const [open, setOpen] = useState(false);
     const [buttonDisplay, setButtonDisplay] = useState('');
     const [loadingDisplay, setloadingDisplay] = useState('none')
-
-    const username = useState("");
-    const password = useRef("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -26,60 +24,56 @@ const UserAccount = () => {
       const handleClose = () => {
         setOpen(false);
       };
-
+      
       const handleLogClick = () =>{
-        setButtonDisplay('none');
-        setloadingDisplay('');
+        setButtonDisplay('');
+        setloadingDisplay('inline-block');
+        getCredentials().then(function(response) {
+            localStorage.setItem('firstname', response.firstname);
+            localStorage.setItem('name', response.name);
+            localStorage.setItem('country', response.country);
+            localStorage.setItem('city', response.city);
+            setButtonDisplay('inline-blocj');
+            setloadingDisplay('');
+            setOpen(false)
+        })
 
-        //Envoie d'une requete à l'API pour les identifiants
-        axios({
-            method: 'get',
-            url: 'www.google.com',
-            responseType: 'json'
-          })
-            .then(function (response) {
-                if (response.data){
-                    setOpen(false);
-                    //  Verification
-                    setButtonDisplay('inline-block');
-                    setloadingDisplay('none');
-                }
-                else {
-                    setButtonDisplay('inline-block');
-                    setloadingDisplay('none');
-                    setOpen(false);
-                }
-            }).catch((error)=>{
-
-                setOpen(false);
-                setButtonDisplay('inline-block');
-                setloadingDisplay('none');
-            });
-      }
+      };
+ 
+    const userDisconnected = () => {
+        return (
+            <div>
+                <IconButton id="iconAccount" onClick={handleClickOpen}>
+                    <AccountCircleIconRounded color='black' fontSize='large'></AccountCircleIconRounded>
+                </IconButton>
+                <Dialog open={open}>
+                    <DialogTitle>
+                        Connexion
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField label="Utilisateur"/>
+                        <TextField label="Mot de passe" type="password"/>
+                        <CircularProgress sx={{ display: loadingDisplay}}></CircularProgress>
+                    </DialogContent>
+                    <DialogActions >
+                        <Button sx={{ display: buttonDisplay}} onClick={handleLogClick}>Connexion</Button>
+                        <Button sx={{ display: buttonDisplay}} onClick={handleClose}>Annuler</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        )
+    };
     
+
+    const userConnected = () => {
+        return (
+            <p>Bonjour {localStorage.getItem('name')} {localStorage.getItem('firstname')}</p>
+        )
+    };
+
     return (
-        <div>
-            <IconButton id="iconAccount" onClick={handleClickOpen}>
-                <AccountCircleIconRounded color='black' fontSize='large'></AccountCircleIconRounded>
-            </IconButton>
-            <Dialog open={open}>
-                <DialogTitle>
-                    Connexion
-                </DialogTitle>
-                <DialogContent>
-                    <TextField label="Utilisateur"/>
-                    <TextField label="Mot de passe" type="password"/>
-                    <CircularProgress sx={{ display: loadingDisplay}}></CircularProgress>
-                </DialogContent>
-                <DialogActions >
-                    <Button sx={{ display: buttonDisplay}} onClick={handleLogClick}>Connexion</Button>
-                    <Button sx={{ display: buttonDisplay}} onClick={handleClose}>Annuler</Button>
-                </DialogActions>
-
-            </Dialog>
-        </div>
+        localStorage.getItem("name")? userConnected() : userDisconnected()
     )
-
 }
 
 export default UserAccount;

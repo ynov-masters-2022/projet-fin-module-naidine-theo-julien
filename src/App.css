@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.card2
+{
+  display: inline-block;
+  margin-top: 50px;
+  border: solid;
+  border-radius: 20px;
+  border-color: black;
+  width: 250px;
+  height: 320px;
+  background-color: #03A9F5;
+
+}

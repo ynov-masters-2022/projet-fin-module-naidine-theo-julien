@@ -3,10 +3,13 @@ import Capital from './Capital'
 const capitals  = ['Paris', 'Moscou' , 'Washington' , 'Amsterdam' , 'Bruxelles' , 'Londres' , 'Madrid' , 'Tokyo'];
 
 const Favorite  = () => {
+    
     return (
         <div>
-            {capitals.map((capital) => {
-               <Capital ville={capital}/>
+            {capitals.map((capital, i) => {
+                return(
+               <Capital ville={capital} key= {i}/>
+                )
             })}
         </div>
     )
